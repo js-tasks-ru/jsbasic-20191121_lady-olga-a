@@ -19,6 +19,7 @@ function print(text) {
  * чтобы функция sayHello работала корректно
  */
 function isValid(name) {
+  
 }
 
 function sayHello() {
