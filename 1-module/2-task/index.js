@@ -13,6 +13,12 @@ function isValid(name) {
   if (name === null) {
     return false;
   }
+  if (name === undefined) {
+    return false;    
+  }
+  if (name === '') {
+    return false;    
+  }
   if ((name.length > 3) && (name.indexOf(' ') === -1)) {
     return true;
   } else {
