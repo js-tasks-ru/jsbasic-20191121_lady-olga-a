@@ -14,16 +14,34 @@
  * @constructor
  */
 function SortableTable(items) {
-  /**
-   * @property {Element} - обязательно свойство, которое ссылается на элемент <table>
-   */
   this.el = document.createElement('table');
-
-  /**
-   * Метод выполняет сортировку таблицы
-   * @param {number} column - номер колонки, по которой
-   * нужно выполнить сортировку (отсчет начинается от 0)
-   * @param {boolean} desc - признак того, что сортировка должна идти в обратном порядке
-   */
-  this.sort = (column, desc = false) => {};
+  let thead = document.createElement('thead');	
+  let tr = document.createElement('tr');
+  for (let key in items[0]) {
+    let td = document.createElement('td');  
+    td.innerHTML = key;
+    tr.appendChild(td);			
+  }
+  thead.appendChild(tr);
+  this.el.appendChild(thead);
+  let tbody = document.createElement('tbody');		
+  for (let key in items) {
+    let obj = items[key];
+    let tr = document.createElement('tr');
+    for (let ob in obj) {
+      let td = document.createElement('td');
+      td.innerHTML = obj[ob];
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);	  
+  }
+  this.el.appendChild(tbody);	  
+  let typeSort = ['text', 'numeric', 'numeric', 'text'];
+  this.sort = (column, desc = false) => {
+    let sortedRows = Array.from(this.el.rows).slice(1).sort((a, b) => (typeSort[column] === 'text' ? a.cells[column].innerHTML > b.cells[column].innerHTML : a.cells[column].innerHTML - b.cells[column].innerHTML));
+    if (desc === true) {
+      sortedRows.reverse();
+    }
+    tbody.append(...sortedRows);
+  };
 }
